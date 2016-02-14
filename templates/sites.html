@@ -1,0 +1,70 @@
+{% extends "layout.html" %}
+
+{% block title %}Sites{% endblock %}
+
+{% block head %}
+
+{{ parent() }}
+
+{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="col-md-12">
+        <h1>Sites</h1>
+
+        <ul class="skills">
+            {% for site in sites %}
+            <li>
+                <form class="form-inline" action="/sites/delete" method="post">
+                    <div class="form-group">
+                        <label>Title:</label>
+                        <p class="inline">{{ site.title }}</p>
+                        <label>First used:</label>
+                        <p class="inline">{{ site.started|date("m/d/Y") }}</p>
+                        <input type="hidden" name="id" value="{{ site.id }}">
+                        <!--<button type="submit" name="Edit" class="btn btn-Edit">Edit</button>-->
+                        <button type="submit" name="delete" class="btn btn-danger">Delete</button>
+                    </div>
+                </form>
+            </li>
+            {% endfor %}
+        </ul>
+
+        {% if auth %}
+        Add new Skill:
+        <form action="sites/add" method="post" >
+            <div class="form-group">
+                <label for="title">Title</label>
+                <input type="text" class="form-control" id="title" placeholder="Title" name="title">
+                {% if error.duplicate %}
+                <span id="duplicate-errors" class="error">{{ error.duplicate }}</span>
+                {% endif %}
+            </div>
+            <div class="form-group">
+                <label for="dateStarted">Date started</label>
+                <input type="text" class="form-control date" id="dateStarted" placeholder="Date started" name="dateStarted">
+            </div>
+            <div class="form-group">
+                <label for="dateFinished">Date finished</label>
+                <input type="text" class="form-control date" id="dateFinished" placeholder="Date finished" name="dateFinished">
+            </div>
+            <div class="form-group">
+                <label for="skills">Skills</label>
+                <div class="form-group" id="skills">
+                {% for skill in skills %}
+                    <div class="checkbox">
+                        <label for="skill-{{ skill.id }}">
+                            <input type="checkbox" id="skill-{{ skill.id }}" name="skills[]" value="{{ skill.id }}">{{ skill.title }}
+                        </label>
+                    </div>
+                {% endfor %}
+                </div>
+            </div>
+            <button type="submit" class="btn btn-default">Submit</button>
+        </form>
+        {% endif %}
+    </div>
+</div>
+
+{% endblock %}

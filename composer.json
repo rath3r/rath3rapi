@@ -1,0 +1,21 @@
+{
+    "authors": [
+        {
+            "name": "Thomas Meehan",
+            "email": "thom.meehan@gmail.com",
+            "homepage": "http://www.rath3r.com",
+            "role": "Developer/Sotfware Engineer"
+        }
+    ],
+    "require": {
+        "slim/slim": "^3.0@RC",
+        "slim/twig-view": "^2.0",
+        "illuminate/database": "*"
+    },
+    "autoload": {
+        "classmap": [
+            "app",
+            "app/controllers"
+        ]
+    }
+}

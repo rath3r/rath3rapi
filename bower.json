@@ -1,0 +1,28 @@
+{
+  "name": "rath3rapi",
+  "version": "0.0.1",
+  "homepage": "",
+  "authors": [
+    "Thomas Meehan thom.meehan@gmail.com"
+  ],
+  "description": "",
+  "main": "public/index.php",
+  "keywords": [
+    "template",
+    "static"
+  ],
+  "license": "MIT",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "bootstrap": "*",
+    "jquery": "~2.1.4",
+    "jquery-ui": "~1.11.4"
+  }
+}

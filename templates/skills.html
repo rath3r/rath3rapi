@@ -1,0 +1,57 @@
+{% extends "layout.html" %}
+
+{% block title %}Edit{% endblock %}
+
+{% block head %}
+
+{{ parent() }}
+
+{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="col-md-12">
+        <h1>Skills</h1>
+
+        <ul class="skills">
+            {% for item in skills %}
+            <li>
+                <form class="form-inline" action="/skills/delete" method="post">
+                    <div class="form-group">
+                        <label>Title:</label>
+                        <p class="inline">{{ item.title }}</p>
+                        <label>First used:</label>
+                        <p class="inline">{{ item.started|date("m/d/Y") }}</p>
+                        <input type="hidden" name="id" value="{{ item.id }}">
+                        <button type="submit" class="btn btn-danger">Delete</button>
+                    </div>
+                </form>
+            </li>
+            {% endfor %}
+        </ul>
+
+        {% if auth %}
+        Add new Skill:
+        <form action="skills/add" method="post" >
+            <div class="form-group">
+                <label for="title">Title</label>
+                <input type="text" class="form-control" id="title" placeholder="Title" name="title">
+                {% if error.duplicate %}
+                <span id="duplicate-errors" class="error">{{ error.duplicate }}</span>
+                {% endif %}
+            </div>
+            <div class="form-group">
+                <label for="dateStarted">Date started</label>
+                <input type="text" class="form-control date" id="dateStarted" placeholder="Date started" name="dateStarted">
+            </div>
+            <div class="form-group">
+                <label for="dateFinished">Date finished</label>
+                <input type="text" class="form-control date" id="dateFinished" placeholder="Date finished" name="dateFinished">
+            </div>
+            <button type="submit" class="btn btn-default">Submit</button>
+        </form>
+        {% endif %}
+    </div>
+</div>
+
+{% endblock %}

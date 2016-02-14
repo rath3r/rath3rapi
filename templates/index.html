@@ -1,0 +1,18 @@
+{% extends "layout.html" %}
+
+{% block title %}Index{% endblock %}
+{% block head %}
+{{ parent() }}
+{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <p class="important">
+                {% include 'partials/login.html' %}
+            </p>
+        </div>
+    </div>
+</div>
+{% endblock %}

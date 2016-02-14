@@ -1,0 +1,84 @@
+{% extends "layout.html" %}
+
+{% block title %}Register{% endblock %}
+{% block head %}
+{{ parent() }}
+{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="row">
+        <div class="col-md-10">
+            <h2 class="important">Register Page</h2>
+            {% if regOpen %}
+
+                {% if success %}
+                    <p>Please wait for approval.</p>
+                {% else %}
+
+                    {% if error.duplicate %}
+                        <p><span id="duplicate-errors" class="error">Username in use!</span></p>
+                    {% endif %}
+
+                    <p>Please fill out your details to register:</p>
+
+                    <form action="/register" method="post" autocomplete="off">
+                        <div class="form-group">
+                            <label for="username" class="col-sm-2">Username</label>
+                            <input id="username" type="text" name="username" autocomplete="off">
+                            {% if error.username %}
+                            <span id="username-errors" class="error">username is required!</span>
+                            {% endif %}
+                        </div>
+                        <div class="form-group">
+                            <label for="email" class="col-sm-2">Email</label>
+                            <input id="email" type="text" name="email" autocomplete="off">
+                            {% if error.email %}
+                            <span id="email-errors" class="error">email is required!</span>
+                            {% endif %}
+                        </div>
+                        <div class="form-group">
+                            <label for="firstname" class="col-sm-2">First name</label>
+                            <input id="firstname" type="text" name="firstname" autocomplete="off">
+                            {% if error.firstname %}
+                            <span id="firstname-errors" class="error">firstname is required!</span>
+                            {% endif %}
+                        </div>
+                        <div class="form-group">
+                            <label for="surname" class="col-sm-2">Surname</label>
+                            <input id="surname" type="text" name="surname" autocomplete="off">
+                            {% if error.surname %}
+                            <span id="surname-errors" class="error">surname is required!</span>
+                            {% endif %}
+                        </div>
+                        <div class="form-group">
+                            <label for="password" class="col-sm-2">Password</label>
+                            <input id="password" type="password" name="password" autocomplete="off">
+                            {% if error.password %}
+                            <span id="password-errors" class="error">password is required!</span>
+                            {% endif %}
+                        </div>
+                        <div class="form-group">
+                            <label for="passwordConfirm" class="col-sm-2">Confirm password</label>
+                            <input id="passwordConfirm" type="password" name="passwordConfirm" autocomplete="off">
+                            {% if error.passwordConfirm %}
+                            <span id="passwordConfirm-errors" class="error">password must match!</span>
+                            {% endif %}
+                        </div>
+                        <div class="form-group">
+                            <button type="submit" class="btn btn-default col-sm-offset-2">Submit</button>
+                        </div>
+                    </form>
+
+                {% endif %}
+
+            {% else %}
+                <p>Registration not open at this time.</p>
+            {% endif %}
+        </div>
+        <div class="col-md-2">
+
+        </div>
+    </div>
+</div>
+{% endblock %}

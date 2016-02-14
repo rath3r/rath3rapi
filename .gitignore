@@ -1,0 +1,6 @@
+.bowerrc
+.config
+.idea
+node_modules
+vendor
+bower_components
