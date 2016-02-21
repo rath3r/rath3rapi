@@ -17,9 +17,14 @@ class site {
     public $container;
     public $database;
     public $routes;
+    public $app;
 
     function __construct() {
         //$this->routes = new Routes();
+    }
+
+    public function getApp(){
+        return $this->app;
     }
 
     function run() {
@@ -31,32 +36,22 @@ class site {
 
         $app->db = $this->database;
 
-//        $app->db->createSkills();
-//        $app->db->createSites();
-//        $app->db->createUsers();
-//
-//        echo "hello";
-//        die;
+        $this->flashDB(false);
 
         $app->auth = false;
         $app->user = '';
 
-        $app->add(function ($request, $response, $next) use (&$app) {
+        $app->add(function ($request, $response, $next) use (&$app){
 
-            //var_dump($_SESSION);
-            //var_dump($request);
-            //var_dump($app);
             if (isset($_SESSION['userID'])) {
                 $app->auth = true;
                 $app->user = $_SESSION['username'];
             }
 
-//            $response->getBody()->write('BEFORE??');
-//            $response->getBody()->write('"before me"');
             $response = $next($request, $response);
-//            $response->getBody()->write('AFTER');
-            //echo "after me";
+
             return $response;
+
         });
 
         $container = $app->getContainer();
@@ -67,12 +62,6 @@ class site {
                     'cache' => '../cache',
                 ]
             );
-
-//            $twig = new Twig_Environment($loader, array(
-//                'debug' => true,
-//                // ...
-//            ));
-//            $twig->addExtension(new Twig_Extension_Debug());
 
             // Instantiate and add Slim specific extension
             $view->addExtension(new Slim\Views\TwigExtension(
@@ -87,8 +76,10 @@ class site {
 
         $app = $route->run($app);
 
+        $this->app = $app;
+
         // Run app
-        $app->run();
+        $this->app->run();
     }
 
     function setUpDb() {
@@ -96,5 +87,19 @@ class site {
         $this->database = new database();
         //$this->database->createUsers();
         //$this->db = new NotORM($database->pdo);
+    }
+
+    function flashDB($check) {
+
+        if($check){
+
+            $this->app->db->createSkills();
+            $this->app->db->createSites();
+            $this->app->db->createUsers();
+            $this->app->db->createImages();
+
+            echo "new database";
+            die;
+        }
     }
 }

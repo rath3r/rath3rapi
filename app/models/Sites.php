@@ -16,4 +16,15 @@ class Sites extends Model
         return $this->belongsToMany('Skills');
 
     }
+
+    /**
+     * Get the skills associated with the article
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
+    public function images() {
+
+        return $this->belongsToMany('Images');
+
+    }
 }

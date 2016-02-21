@@ -1,0 +1,21 @@
+{% if auth %}
+<div class="row">
+    <div class="col-md-12">
+        <p>Add new image:</p>
+        <form action="images/add" method="post" enctype="multipart/form-data" >
+            <div class="form-group">
+                <label for="title">Title</label>
+                <input type="text" class="form-control" id="title" placeholder="Title" name="title">
+                {% if error.duplicate %}
+                <span id="duplicate-errors" class="error">{{ error.duplicate }}</span>
+                {% endif %}
+            </div>
+            <div class="form-group">
+                Select image to upload:
+                <input type="file" name="image" class="btn btn-default">
+            </div>
+            <button type="submit" class="btn btn-default">Submit</button>
+        </form>
+    </div>
+</div>
+{% endif %}

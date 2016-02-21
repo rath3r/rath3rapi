@@ -14,11 +14,16 @@ class Routes {
 
     function run($app) {
 
+//        var_dump(site::getApp());
+//        die;
+
         $app = $this->root($app);
 
         $app = $this->skills($app);
 
         $app = $this->sites($app);
+
+        $app = $this->images($app);
 
         $app = $this->json($app);
 
@@ -33,6 +38,7 @@ class Routes {
 //
 //            return "";
 //        });
+
 
         return $app;
     }
@@ -115,12 +121,14 @@ class Routes {
 
             $sites = new Sites_Controller();
             $skills = new Skills_Controller();
+            $images = new Images_Controller();
 
             $return = [
                 'auth' => $this->auth,
                 'user' => $this->user,
                 'sites' => $sites->getAll(),
-                'skills' => $skills->getAll()
+                'skills' => $skills->getAll(),
+                'images' => $images->getAll()
             ];
 
             return $this->view->render($response, 'sites.html', $return);
@@ -149,6 +157,43 @@ class Routes {
             $sites->delete($request, $response, $args);
 
             return $response->withStatus(302)->withHeader('Location', '/sites');
+
+        });
+
+        return $app;
+    }
+
+    function images($app) {
+
+        $app->get('/images', function ($request, $response, $args) {
+
+            $images = new Images_Controller();
+
+            $return = [
+                'auth' => $this->auth,
+                'user' => $this->user,
+                'images' => $images->getAll()
+            ];
+
+            return $this->view->render($response, 'images.html', $return);
+        });
+
+        $app->post('/images/add', function ($request, $response, $args) {
+
+            $images = new Images_Controller();
+
+            $images->add($request, $response, $args);
+
+            return $response->withStatus(302)->withHeader('Location', '/images');
+        });
+
+        $app->post('/images/delete', function ($request, $response, $args) {
+
+            $images = new Images_Controller();
+
+            $images->delete($request, $response, $args);
+
+            return $response->withStatus(302)->withHeader('Location', '/images');
 
         });
 

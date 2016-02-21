@@ -1,0 +1,54 @@
+{% extends "layout.html" %}
+
+{% block title %}Sites{% endblock %}
+
+{% block head %}
+
+{{ parent() }}
+
+{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="col-md-12">
+        <h2>Images</h2>
+
+        <div class="row">
+            {%if images %}
+                {% for image in images %}
+                <div class="col-md-4 image">
+                    <div class="row">
+                        <div class="col-xs-3">
+                            <label>Title:</label>
+                        </div>
+                        <div class="col-xs-9">
+                            <h3 class="inline">{{ image.title }}</h3>
+                        </div>
+                    </div>
+                    <hr>
+                    <div class="row">
+                        <div class="col-xs-12">
+                            <img src="{{ image.url }}" />
+                        </div>
+                    </div>
+                    {% if auth %}
+                    <form class="form-inline" action="/images/delete" method="post">
+                        <div class="actions">
+                            <input type="hidden" name="id" value="{{ site.id }}">
+                            <button type="submit" name="delete" class="btn btn-danger">Delete</button>
+                        </div>
+                    </form>
+                    {% endif %}
+                </div>
+                {% endfor %}
+            {% else %}
+                <div class="col-md-12">
+                    <p>No images yet.</p>
+                </div>
+            {% endif %}
+        </div>
+        {% include 'forms/addImages.html' %}
+    </div>
+</div>
+
+{% endblock %}

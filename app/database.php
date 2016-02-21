@@ -61,10 +61,11 @@ class database
         $this->capsule->schema()->create('skills', function($table)
         {
             $table->increments('id');
+            $table->timestamps();
             $table->string('title')->unique();
             $table->date('dateStarted');
             $table->date('dateFinished');
-            $table->timestamps();
+            $table->boolean('stillUsing');
         });
     }
 
@@ -77,6 +78,7 @@ class database
             $table->string('title')->unique();
             $table->date('dateStarted');
             $table->date('dateFinished');
+            $table->boolean('stillUsing');
 
         });
 
@@ -88,6 +90,28 @@ class database
             $table->integer('skills_id')->unsigned()->index();
             $table->foreign('skills_id')->references('id')->on('skills')->onDelete('cascade');
 
+
+        });
+    }
+
+    public function createImages() {
+
+        $this->capsule->schema()->create('images', function($table) {
+
+            $table->increments('id');
+            $table->timestamps();
+            $table->string('title');
+            $table->string('url');
+
+        });
+
+        $this->capsule->schema()->create('images_sites', function($table) {
+
+            $table->integer('sites_id')->unsigned()->index();
+            $table->foreign('sites_id')->references('id')->on('sites')->onDelete('cascade');
+
+            $table->integer('images_id')->unsigned()->index();
+            $table->foreign('images_id')->references('id')->on('images')->onDelete('cascade');
 
         });
     }

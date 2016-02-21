@@ -16,12 +16,16 @@ class Sites_Controller {
 
         $body = $request->getParsedBody();
 
-//        var_dump($body);
-        var_dump($body['skills']);
-//
+        $body['dateStarted'] = DateTime::createFromFormat('d/m/Y', $body['dateStarted'])->format('Y-m-d');
+        if($body['dateFinished']){
+            $body['dateFinished'] = DateTime::createFromFormat('d/m/Y', $body['dateFinished'])->format('Y-m-d');
+        }
 
-       $body['dateStarted'] = DateTime::createFromFormat('d/m/Y', $body['dateStarted'])->format('Y-m-d');
-        $body['dateFinished'] = DateTime::createFromFormat('d/m/Y', $body['dateFinished'])->format('Y-m-d');
+        $stillUsing = false;
+
+        if(isset($body['stillUsing'])) {
+            $stillUsing = $body['stillUsing'];
+        }
 
         $site = new Sites();
 
@@ -47,22 +51,24 @@ class Sites_Controller {
         }
 
         if($add) {
+
             $site->title = $body['title'];
             $site->dateStarted = $body['dateStarted'];
             $site->dateFinished = $body['dateFinished'];
+
+            $site->stillUsing = $stillUsing;
 
             //$site->skills()->attach($body['skills']);
 
             $site->save();
 
-            $result = $site::where('title', $body['title'])->first();
-
-
-
+//            var_dump($site->images());
+//            die;
+            //$result = $site::where('title', $body['title'])->first();
 
             foreach($body['skills'] as $skill) {
 
-                echo "----";
+                //echo "----";
                 //var_dump($result);
                 //var_dump($skill);
                 $association = [$skill];
@@ -71,15 +77,18 @@ class Sites_Controller {
 
             }
 
-            //die;
+            foreach($body['images'] as $image) {
+
+                //echo "----";
+                //var_dump($result);
+                //var_dump($image);
+                $association = [$image];
+                //var_dump($association);
+                $site->images()->attach($association);
+
+            }
+
         }
-
-//        $return['skills'] = $skill::all()->toArray();
-//        $return['error'] = $error;
-//        $return['success'] = $success;
-
-        //return $return;
-        //echo "skills add";
     }
 
     function delete($request, $response, $args) {
@@ -108,10 +117,35 @@ class Sites_Controller {
     public function getAll() {
 
         $sites = new Sites();
-        //echo "asdf";
+        $return = [];
+        //echo "asdf";->toArray()
+        $allSites = $sites::all();
 
-        return $sites::all()->toArray();
+        $siteArr = $allSites->toArray();
+        //var_dump($allSites);
 
+        $ind = 0;
+
+        // $site = $sites::find(1);
+        foreach($allSites as $site) {
+
+            $skillsArr = [];
+
+            if($site->skills->toArray()){
+                $skillsArr = $site->skills->toArray();
+            }
+
+            $siteArr[$ind]['skills'] = $skillsArr;
+
+            if($site->images->toArray()){
+                $imagesArr = $site->skills->toArray();
+            }
+
+            $siteArr[$ind]['images'] = $imagesArr;
+
+            $ind ++;
+        }
+
+        return $siteArr;
     }
-
 }
