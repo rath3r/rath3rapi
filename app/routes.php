@@ -80,20 +80,8 @@ class Routes {
             //http://help.slimframework.com/discussions/problems/12059-how-to-display-flash-message-in-twig-view
             // https://github.com/slimphp/Slim-Flash
 
-            // only works in v2
-            //$app->redirect('/skills');
-
             return $response->withStatus(302)->withHeader('Location', '/skills');
 
-
-
-//            return $this->view->render($response->withStatus(301)->withHeader('Location', '/skills'), 'skills.html', [
-//                'auth'      => $this->auth,
-//                'user'      => $this->user,
-//                'skills'    => $ret['skills'],
-//                'error'     => $ret['error'],
-//                'success'   => $ret['success']
-//            ]);
         });
 
         $app->post('/skills/delete', function ($request, $response, $args) {
@@ -103,13 +91,7 @@ class Routes {
             $ret = $skills->delete($request, $response, $args);
 
             return $response->withStatus(302)->withHeader('Location', '/skills');
-//            return $this->view->render($response, 'skills.html', [
-//                'auth'      => $this->auth,
-//                'user'      => $this->user,
-//                'skills'    => $ret['skills'],
-//                'error'     => $ret['error'],
-//                'success'   => $ret['success']
-//            ]);
+
         });
 
         return $app;
@@ -148,6 +130,44 @@ class Routes {
             //$app->redirect('/skills');
 
             return $response->withStatus(302)->withHeader('Location', '/sites');
+        });
+
+        $app->get('/sites/edit', function ($request, $response, $args) {
+
+            $sites = new Sites_Controller();
+            $site = $sites->edit($request, $response, $args);
+
+            $skills = new Skills_Controller();
+            $skills = $skills->getAll();
+
+            $images = new Images_Controller();
+            $images = $images->getAll();
+
+            foreach($skills as &$skill) {
+                foreach($site['skills'] as $siteSkill) {
+                    if($siteSkill['id'] == $skill['id']){
+                        $skill['inUse'] = true;
+                    }
+                }
+            }
+
+            foreach($images as &$image) {
+                foreach($site['images'] as $siteImage) {
+                    if($siteImage['id'] == $image['id']){
+                        $image['inUse'] = true;
+                    }
+                }
+            }
+
+            $return = [
+                'auth' => $this->auth,
+                'user' => $this->user,
+                'site' => $site,
+                'skills' => $skills,
+                'images' => $images
+            ];
+
+            return $this->view->render($response, '/forms/editSites.html', $return);
         });
 
         $app->post('/sites/delete', function ($request, $response, $args) {

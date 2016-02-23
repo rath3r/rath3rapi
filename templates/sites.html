@@ -10,68 +10,91 @@
 
 {% block content %}
 <div class="container">
-    <div class="col-md-12">
-        <h2>Sites</h2>
 
-        <div class="row">
-            {% if sites %}
-                {% for site in sites %}
-                    <div class="col-md-4">
-                        <div class="row">
-                            <div class="col-xs-3">
-                                <label>Title:</label>
-                            </div>
-                            <div class="col-xs-9">
-                                <h2 class="inline">{{ site.title }}</h2>
-                            </div>
-                        </div>
-                        <hr>
-                        <div class="row">
-                            <div class="col-xs-12 image">
-                                {% for image in site.images %}
-                                <img src="{{ image.url }}" />
-                                {% endfor %}
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-xs-6">
-                                <label>Date Started:</label>
-                                <p>{{ site.dateStarted|date("m/d/Y") }}</p>
-                            </div>
-                            <div class="col-xs-6">
-                                <label>Date Finished:</label>
-                                <p>{{ site.dateFinished|date("m/d/Y") }}</p>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-xs-12">
-                                <label>Skills:</label>
-                                <ul>
-                                    {% for skill in site.skills %}
-                                    <li>{{ skill.title }}</li>
-                                    {% endfor %}
-                                </ul>
-                            </div>
-                        </div>
-                        <!--<button type="submit" name="Edit" class="btn btn-Edit">Edit</button>-->
-                        {% if auth %}
-                        <form class="form-inline" action="/sites/delete" method="post">
-                            <div class="actions">
-                                <input type="hidden" name="id" value="{{ site.id }}">
-                                <button type="submit" name="delete" class="btn btn-danger">Delete</button>
-                            </div>
-                        </form>
-                        {% endif %}
-                    </div>
-                {% endfor %}
-            {% else %}
-                <div class="col-md-12">
-                    <p>No sites created yet.</p>
-                </div>
-            {% endif %}
+    <div class="row">
+        <div class="col-md-12">
+            <h2>Sites</h2>
         </div>
-        {% include 'forms/addSites.html' %}
     </div>
+
+    {% include 'forms/addSites.html' %}
+
+    <div class="row">
+        <div class="col-md-12">
+            <h3>All sites:</h3>
+        </div>
+    </div>
+    <div class="row">
+        {% if sites %}
+            {% for site in sites %}
+                <div class="col-md-4">
+                    <div class="row">
+                        <div class="col-xs-3">
+                            <label>Title:</label>
+                        </div>
+                        <div class="col-xs-9">
+                            <h2 class="inline">{{ site.title }}</h2>
+                        </div>
+                    </div>
+                    <hr>
+                    <div class="row">
+                        <div class="col-xs-12 image">
+                            {% for image in site.images %}
+                            <img src="{{ image.url }}" />
+                            {% endfor %}
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-6">
+                            <label>Date Started:</label>
+                            <p>{{ site.dateStarted|date("m/d/Y") }}</p>
+                        </div>
+                        <div class="col-xs-6">
+                            <label>Date Finished:</label>
+                            <p>{{ site.dateFinished|date("m/d/Y") }}</p>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-12">
+                            <label>Skills:</label>
+                            <ul>
+                                {% for skill in site.skills %}
+                                <li>{{ skill.title }}</li>
+                                {% endfor %}
+                            </ul>
+                        </div>
+                    </div>
+                    <!--<button type="submit" name="Edit" class="btn btn-Edit">Edit</button>-->
+                    {% if auth %}
+                    <div class="row">
+                        <div class="col-xs-4">
+                            <form class="form-inline" action="/sites/delete" method="post">
+                                <div class="actions">
+                                    <input type="hidden" name="id" value="{{ site.id }}">
+                                    <button type="submit" name="delete" class="btn btn-danger">Delete</button>
+                                </div>
+                            </form>
+                        </div>
+                        <div class="col-xs-4">
+                            <form class="form-inline" action="/sites/edit" method="get">
+                                <div class="actions">
+                                    <input type="hidden" name="id" value="{{ site.id }}">
+                                    <button type="submit" class="btn btn-success">Edit</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+
+                    {% endif %}
+                </div>
+            {% endfor %}
+        {% else %}
+            <div class="col-md-12">
+                <p>No sites created yet.</p>
+            </div>
+        {% endif %}
+    </div>
+
 </div>
 
 {% endblock %}

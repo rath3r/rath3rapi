@@ -91,57 +91,54 @@ class Sites_Controller {
         }
     }
 
+    function edit($request, $response, $args) {
+
+        $body = $request->getQueryParams();
+
+        $sites = new Sites();
+
+        $sites = $sites::where('ID', '=', $body['id'])->get();
+
+        $siteArr = $sites->toArray();
+
+        $ind = 0;
+
+        foreach($sites as $site) {
+
+            $siteArr[$ind]['skills'] = $site->skills->toArray() ?: [];
+
+            $siteArr[$ind]['images'] = $site->images->toArray() ?: [];
+
+            $ind ++;
+        }
+
+        return $siteArr[0];
+    }
+
     function delete($request, $response, $args) {
 
-//        $error = [];
-////        $success = false;
         $body = $request->getParsedBody();
 
         $sites = new Sites();
         $sites::where('ID', '=', $body['id'])->delete();
-//
-//        $return['skills'] = $skill::all()->toArray();
-//        $return['error'] = $error;
-//        $return['success'] = true;
-//
-//        return $return;
-//        //echo "skills add";
-    }
 
-    function returnArr() {
-        return array(
-            "test" => "Niamh"
-        );
     }
 
     public function getAll() {
 
         $sites = new Sites();
-        $return = [];
-        //echo "asdf";->toArray()
+
         $allSites = $sites::all();
 
         $siteArr = $allSites->toArray();
-        //var_dump($allSites);
 
         $ind = 0;
 
-        // $site = $sites::find(1);
         foreach($allSites as $site) {
 
-            $skillsArr = [];
+            $siteArr[$ind]['skills'] = $site->skills->toArray() ?: [];
 
-            if($site->skills->toArray()){
-                $skillsArr = $site->skills->toArray();
-            }
-
-            $siteArr[$ind]['skills'] = $skillsArr;
-
-            if($site->images->toArray()){
-                $imagesArr = $site->skills->toArray();
-            }
-
-            $siteArr[$ind]['images'] = $imagesArr;
+            $siteArr[$ind]['images'] = $site->images->toArray() ?: [];
 
             $ind ++;
         }

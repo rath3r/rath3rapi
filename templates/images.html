@@ -10,25 +10,24 @@
 
 {% block content %}
 <div class="container">
-    <div class="col-md-12">
-        <h2>Images</h2>
+    <div class="row">
+        <div class="col-md-12">
+            <h2>Images</h2>
+        </div>
+    </div>
 
-        <div class="row">
-            {%if images %}
-                {% for image in images %}
+    {% include 'forms/addImages.html' %}
+
+    <div class="row">
+        {%if images %}
+            {% for image in images %}
                 <div class="col-md-4 image">
                     <div class="row">
-                        <div class="col-xs-3">
-                            <label>Title:</label>
-                        </div>
-                        <div class="col-xs-9">
+                        <div class="col-xs-12 text-center">
                             <h3 class="inline">{{ image.title }}</h3>
-                        </div>
-                    </div>
-                    <hr>
-                    <div class="row">
-                        <div class="col-xs-12">
+                            <!--<hr>-->
                             <img src="{{ image.url }}" />
+                            <p>{{ image.url }}</p>
                         </div>
                     </div>
                     {% if auth %}
@@ -40,15 +39,12 @@
                     </form>
                     {% endif %}
                 </div>
-                {% endfor %}
-            {% else %}
-                <div class="col-md-12">
-                    <p>No images yet.</p>
-                </div>
-            {% endif %}
+            {% endfor %}
+        {% else %}
+        <div class="col-md-12">
+            <p>No images yet.</p>
         </div>
-        {% include 'forms/addImages.html' %}
+        {% endif %}
     </div>
 </div>
-
 {% endblock %}

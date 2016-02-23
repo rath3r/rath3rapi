@@ -4,7 +4,10 @@ APP.rath3rApi = (function () {
 
     function init() {
 
-        $( ".date" ).datepicker();
+        $( ".date" ).datepicker({
+            changeMonth: true,
+            changeYear: true
+        });
 
     }
 
