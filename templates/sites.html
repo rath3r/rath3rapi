@@ -47,11 +47,15 @@
                     <div class="row">
                         <div class="col-xs-6">
                             <label>Date Started:</label>
-                            <p>{{ site.dateStarted|date("m/d/Y") }}</p>
+                            <p>{{ site.dateStarted|date("d/m/Y") }}</p>
                         </div>
                         <div class="col-xs-6">
                             <label>Date Finished:</label>
-                            <p>{{ site.dateFinished|date("m/d/Y") }}</p>
+                            {% if site.stillUsing %}
+                            <p>Still active</p>
+                            {% else %}
+                            <p>{{ site.dateFinished|date("d/m/Y") }}</p>
+                            {% endif %}
                         </div>
                     </div>
                     <div class="row">
@@ -67,26 +71,34 @@
                     <!--<button type="submit" name="Edit" class="btn btn-Edit">Edit</button>-->
                     {% if auth %}
                     <div class="row">
-                        <div class="col-xs-4">
-                            <form class="form-inline" action="/sites/delete" method="post">
-                                <div class="actions">
-                                    <input type="hidden" name="id" value="{{ site.id }}">
-                                    <button type="submit" name="delete" class="btn btn-danger">Delete</button>
-                                </div>
-                            </form>
-                        </div>
-                        <div class="col-xs-4">
-                            <form class="form-inline" action="/sites/edit" method="get">
-                                <div class="actions">
-                                    <input type="hidden" name="id" value="{{ site.id }}">
-                                    <button type="submit" class="btn btn-success">Edit</button>
-                                </div>
-                            </form>
+                        <div class="col-xs-12">
+                            <ul class="list-inline">
+                                <li>
+                                    <form class="form-inline" action="/sites/delete" method="post">
+                                        <div class="actions">
+                                            <input type="hidden" name="id" value="{{ site.id }}">
+                                            <button type="submit" name="delete" class="btn btn-danger">Delete</button>
+                                        </div>
+                                    </form>
+                                </li>
+                                <li>
+                                    <form class="form-inline" action="/sites/edit" method="get">
+                                        <div class="actions">
+                                            <input type="hidden" name="id" value="{{ site.id }}">
+                                            <button type="submit" class="btn btn-success">Edit</button>
+                                        </div>
+                                    </form>
+                                </li>
+                            </ul>
                         </div>
                     </div>
 
                     {% endif %}
                 </div>
+        {% if loop.index is divisible by(3) %}
+        </div>
+        <div class="row">
+        {% endif %}
             {% endfor %}
         {% else %}
             <div class="col-md-12">

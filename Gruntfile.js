@@ -72,6 +72,10 @@ module.exports = function(grunt) {
                 files: ['<%= settings.assets %>/less/**/*.less'],
                 tasks: ['less'],
             },
+            concat: {
+                files: ['<%= settings.assets %>/js/main.js'],
+                tasks: ['concat:main']
+            }
         }
     });
 

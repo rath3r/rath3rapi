@@ -14,7 +14,7 @@
         <div class="row">
             <div class="col-md-12">
                 <p>Edit new site:</p>
-                <form action="sites/add" method="post" >
+                <form action="/sites/edit" method="post" >
                     <div class="form-group">
                         <label for="title">Title</label>
                         <input type="text" class="form-control" id="title" placeholder="Title" name="title" value="{{ site.title }}">
@@ -24,16 +24,17 @@
                     </div>
                     <div class="form-group">
                         <label for="dateStarted">Date started</label>
-                        <input type="text" class="form-control date" id="dateStarted" placeholder="Date started" name="dateStarted" value="{{ site.dateStarted }}">
+                        <input type="text" class="form-control date" id="dateStarted" placeholder="Date started" name="dateStarted" value="{{ site.dateStarted|date('d/m/Y') }}">
                     </div>
                     <div class="form-group">
                         <label for="dateFinished">Date finished</label>
-                        <input type="text" class="form-control date" id="dateFinished" placeholder="Date finished" name="dateFinished" value="{{ site.dateFinished }}">
+                        <input type="text" class="form-control date" id="dateFinished" placeholder="Date finished" name="dateFinished" value="{{ site.dateFinished|date('d/m/Y') }}">
                     </div>
                     <div class="form-group">
                         <div class="checkbox">
                             <label for="stillUsing">
-                                <input type="checkbox" id="stillUsing" name="stillUsing" value="{{ site.stillUsing }}">Still using this site?
+                                <input type="checkbox" id="stillUsing" name="stillUsing" {% if site.stillUsing %}checked{% else %}false{% endif %}>Still using this site?
+                                <input type="hidden" name="id" value="{{ site.id }}">
                             </label>
                         </div>
                     </div>
@@ -58,7 +59,7 @@
                         <div class="row" id="images">
                             {% if images %}
                             {% for image in images %}
-                            <div class="col-md-2 image">
+                            <div class="col-sm-6 col-md-2 image">
                                 <img src="/{{ image.url }}" />
                                 <div class="checkbox">
                                     <label for="skill-{{ skill.id }}">

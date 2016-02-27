@@ -8,22 +8,27 @@ class Sites_Controller {
 
     }
 
+    function formatDate($date) {
+        var_dump($date);
+        var_dump(DateTime::createFromFormat('d/m/Y', $date));
+        return DateTime::createFromFormat('d/m/Y', $date)->format('Y-m-d');
+    }
+
     function add($request, $response, $args) {
 
-//        $error = [];
-//        $success = false;
         $add = false;
 
         $body = $request->getParsedBody();
 
-        $body['dateStarted'] = DateTime::createFromFormat('d/m/Y', $body['dateStarted'])->format('Y-m-d');
+        $body['dateStarted'] = $this->formatDate($body['dateStarted']);
         if($body['dateFinished']){
-            $body['dateFinished'] = DateTime::createFromFormat('d/m/Y', $body['dateFinished'])->format('Y-m-d');
+            $body['dateFinished'] = $this->formatDate($body['dateFinished']);
         }
 
         $stillUsing = false;
 
         if(isset($body['stillUsing'])) {
+
             $stillUsing = $body['stillUsing'];
         }
 
@@ -58,32 +63,18 @@ class Sites_Controller {
 
             $site->stillUsing = $stillUsing;
 
-            //$site->skills()->attach($body['skills']);
-
             $site->save();
-
-//            var_dump($site->images());
-//            die;
-            //$result = $site::where('title', $body['title'])->first();
 
             foreach($body['skills'] as $skill) {
 
-                //echo "----";
-                //var_dump($result);
-                //var_dump($skill);
                 $association = [$skill];
-                //var_dump($association);
                 $site->skills()->attach($association);
 
             }
 
             foreach($body['images'] as $image) {
 
-                //echo "----";
-                //var_dump($result);
-                //var_dump($image);
                 $association = [$image];
-                //var_dump($association);
                 $site->images()->attach($association);
 
             }
@@ -91,7 +82,7 @@ class Sites_Controller {
         }
     }
 
-    function edit($request, $response, $args) {
+    function getSite($request, $response, $args) {
 
         $body = $request->getQueryParams();
 
@@ -113,6 +104,74 @@ class Sites_Controller {
         }
 
         return $siteArr[0];
+    }
+
+    function edit($request, $response, $args) {
+
+        $body = $request->getParsedBody();
+
+        $sites = new Sites();
+
+        $sites = $sites::where('ID', '=', $body['id'])->get();
+
+        $currSite = $sites[0];
+
+        $currSite->title = $body['title'];
+        $currSite->dateStarted = $this->formatDate($body['dateStarted']);
+        $currSite->dateFinished = $this->formatDate($body['dateFinished']);
+        if(isset($body['stillUsing'])){
+            $currSite->stillUsing = 1;
+        }else{
+            $currSite->stillUsing = 0;
+            $currSite->stillUsing = 0;
+        }
+        $currSite->save();
+
+        $currSkillsIds = $currSite->skills->pluck('id')->toArray();
+
+        // check for skill removals
+        foreach($currSkillsIds as $currSkillsId) {
+
+            if(!in_array($currSkillsId, $body['skills'])){
+
+                $association = [$currSkillsId];
+                $currSite->skills()->detach($association);
+            }
+        }
+
+        // check for skill additions
+        // foreach of the selected skills check if they are alreay present
+        foreach($body['skills'] as $skill) {
+
+            // if selected skill is not in current skills ids array add the association
+            if(!in_array($skill, $currSkillsIds)) {
+
+                $association = [$skill];
+                $currSite->skills()->attach($association);
+            }
+        }
+
+        $currImagesIds = $currSite->images->pluck('id')->toArray();
+
+        // check for skill removals
+        foreach($currImagesIds as $currImagesId) {
+
+            if(!in_array($currImagesId, $body['images'])){
+
+                $association = [$currImagesId];
+                $currSite->images()->detach($association);
+            }
+        }
+
+        // check for image additions
+        foreach($body['images'] as $image) {
+
+            if(!in_array($image, $currImagesIds)) {
+
+                $association = [$image];
+                $currSite->images()->attach($association);
+            }
+        }
     }
 
     function delete($request, $response, $args) {

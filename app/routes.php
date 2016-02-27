@@ -135,7 +135,7 @@ class Routes {
         $app->get('/sites/edit', function ($request, $response, $args) {
 
             $sites = new Sites_Controller();
-            $site = $sites->edit($request, $response, $args);
+            $site = $sites->getSite($request, $response, $args);
 
             $skills = new Skills_Controller();
             $skills = $skills->getAll();
@@ -168,6 +168,15 @@ class Routes {
             ];
 
             return $this->view->render($response, '/forms/editSites.html', $return);
+        });
+
+        $app->post('/sites/edit', function ($request, $response, $args) {
+
+            $sites = new Sites_Controller();
+            $site = $sites->edit($request, $response, $args);
+
+            return $response->withStatus(302)->withHeader('Location', '/sites');
+
         });
 
         $app->post('/sites/delete', function ($request, $response, $args) {
