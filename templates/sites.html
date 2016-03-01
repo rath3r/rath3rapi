@@ -20,23 +20,44 @@
     {% include 'forms/addSites.html' %}
 
     <div class="row">
-        <div class="col-md-12">
+        <div class="col-md-6">
             <h3>All sites:</h3>
         </div>
+        <div class="col-md-6 text-right">
+            <ul id="site-controls" class="list-inline">
+                <li>
+                    <button class="btn sort active" data-sort="title:asc">Title
+                        <span class="glyphicon glyphicon-triangle-top" aria-hidden="true"></span>
+                    </button>
+                </li>
+                <li>
+                    <button class="btn sort" data-sort="title:desc">Title
+                        <span class="glyphicon glyphicon-triangle-bottom" aria-hidden="true"></span>
+                    </button>
+                </li>
+                <li>
+                    <button class="btn sort" data-sort="date:asc">Date
+                        <span class="glyphicon glyphicon-triangle-top" aria-hidden="true"></span>
+                    </button>
+                </li>
+                <li>
+                    <button class="btn sort" data-sort="date:desc">Date
+                        <span class="glyphicon glyphicon-triangle-bottom" aria-hidden="true"></span>
+                    </button>
+                </li>
+            </ul>
+        </div>
     </div>
-    <div class="row">
+
+    <div id="site-container" class="row">
         {% if sites %}
             {% for site in sites %}
-                <div class="col-md-4">
+                <div class="col-md-4 mix" data-date="{{ site.dateStarted|date('Ymd') }}" data-title="{{ site.title }}">
                     <div class="row">
-                        <div class="col-xs-3">
-                            <label>Title:</label>
-                        </div>
-                        <div class="col-xs-9">
+                        <div class="col-xs-12 text-center">
                             <h2 class="inline">{{ site.title }}</h2>
                         </div>
                     </div>
-                    <hr>
                     <div class="row">
                         <div class="col-xs-12 image">
                             {% for image in site.images %}
@@ -60,6 +81,16 @@
                     </div>
                     <div class="row">
                         <div class="col-xs-12">
+                            <label>Url:</label>
+                            {% if site.url %}
+                                <a href="{{ site.url }}">{{ site.url }}</a>
+                            {% else %}
+                                <img src="/images/icons/offline.svg" width="25px" alt="Offline"/> Offline
+                            {% endif %}
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-12">
                             <label>Skills:</label>
                             <ul>
                                 {% for skill in site.skills %}
@@ -68,7 +99,6 @@
                             </ul>
                         </div>
                     </div>
-                    <!--<button type="submit" name="Edit" class="btn btn-Edit">Edit</button>-->
                     {% if auth %}
                     <div class="row">
                         <div class="col-xs-12">
@@ -92,13 +122,8 @@
                             </ul>
                         </div>
                     </div>
-
                     {% endif %}
                 </div>
-        {% if loop.index is divisible by(3) %}
-        </div>
-        <div class="row">
-        {% endif %}
             {% endfor %}
         {% else %}
             <div class="col-md-12">

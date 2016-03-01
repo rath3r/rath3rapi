@@ -1,28 +1,41 @@
 {% if auth %}
-Add new Skill:
-<form action="skills/add" method="post" >
-    <div class="form-group">
-        <label for="title">Title</label>
-        <input type="text" class="form-control" id="title" placeholder="Title" name="title">
-        {% if error.duplicate %}
-        <span id="duplicate-errors" class="error">{{ error.duplicate }}</span>
-        {% endif %}
+<div class="row">
+    <div class="col-md-12">
+        <a class="btn btn-primary" role="button" data-toggle="collapse" href="#addSkill" aria-expanded="false" aria-controls="addSkill">
+            Add Skill
+        </a>
     </div>
-    <div class="form-group">
-        <label for="dateStarted">Date started</label>
-        <input type="text" class="form-control date" id="dateStarted" placeholder="Date started" name="dateStarted">
-    </div>
-    <div class="form-group">
-        <label for="dateFinished">Date finished</label>
-        <input type="text" class="form-control date" id="dateFinished" placeholder="Date finished" name="dateFinished">
-    </div>
-    <div class="form-group">
-        <div class="checkbox">
-            <label for="stillUsing">
-                <input type="checkbox" id="stillUsing" name="stillUsing" value="0">Still using this skill?
-            </label>
+</div>
+<div class="collapse row" id="addSkill">
+    <div class="col-md-12">
+        <div class="well">
+            <p>Add new Skill:</p>
+            <form action="skills/add" method="post" >
+                <div class="form-group">
+                    <label for="title">Title</label>
+                    <input type="text" class="form-control" id="title" placeholder="Title" name="title">
+                    {% if error.duplicate %}
+                    <span id="duplicate-errors" class="error">{{ error.duplicate }}</span>
+                    {% endif %}
+                </div>
+                <div class="form-group">
+                    <label for="dateStarted">Date started</label>
+                    <input type="text" class="form-control date" id="dateStarted" placeholder="Date started" name="dateStarted">
+                </div>
+                <div class="form-group">
+                    <label for="dateFinished">Date finished</label>
+                    <input type="text" class="form-control date" id="dateFinished" placeholder="Date finished" name="dateFinished">
+                </div>
+                <div class="form-group">
+                    <div class="checkbox">
+                        <label for="stillUsing">
+                            <input type="checkbox" id="stillUsing" name="stillUsing" value="0">Still using this skill?
+                        </label>
+                    </div>
+                </div>
+                <button type="submit" class="btn btn-default">Submit</button>
+            </form>
         </div>
     </div>
-    <button type="submit" class="btn btn-default">Submit</button>
-</form>
+</div>
 {% endif %}

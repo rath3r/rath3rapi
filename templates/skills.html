@@ -10,26 +10,63 @@
 
 {% block content %}
 <div class="container">
-    <div class="col-md-12">
-        <h2>Skills</h2>
 
-        <ul class="skills">
-            {% for item in skills %}
-            <li>
-                <form class="form-inline" action="/skills/delete" method="post">
-                    <div class="form-group">
+    <div class="row">
+        <div class="col-md-12">
+            <h2>Skills</h2>
+        </div>
+    </div>
+
+    {% include 'forms/addSkills.html' %}
+
+    <div class="row">
+        <div class="col-md-6">
+            <h3>All skills:</h3>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+            <ul class="skills">
+                {% for skill in skills %}
+                <li>
+                    <div>
                         <label>Title:</label>
-                        <p class="inline">{{ item.title }}</p>
+                        <p class="inline">{{ skill.title }}</p>
                         <label>First used:</label>
-                        <p class="inline">{{ item.started|date("m/d/Y") }}</p>
-                        <input type="hidden" name="id" value="{{ item.id }}">
-                        <button type="submit" class="btn btn-danger">Delete</button>
+                        <p class="inline">{{ skill.dateStarted|date("m/d/Y") }}</p>
+                        {% if skill.stillUsing %}
+                        <label>Still Using:</label>
+                        <p class="inline">{{ skill.stillUsing }}</p>
+                        {% else %}
+                        <label>Used until:</label>
+                        <p class="inline">{{ skill.dateFinished|date("m/d/Y") }}</p>
+                        {% endif %}
                     </div>
-                </form>
-            </li>
-            {% endfor %}
-        </ul>
-        {% include 'forms/addSkills.html' %}
+                    {% if auth %}
+                    <ul class="list-inline">
+                        <li>
+                            <form class="form-inline" action="/skills/delete" method="post">
+                                <div class="actions">
+                                    <input type="hidden" name="id" value="{{ skill.id }}">
+                                    <button type="submit" name="delete" class="btn btn-danger">Delete</button>
+                                </div>
+                            </form>
+                        </li>
+                        <li>
+                            <form class="form-inline" action="/skills/edit" method="get">
+                                <div class="actions">
+                                    <input type="hidden" name="id" value="{{ skill.id }}">
+                                    <button type="submit" class="btn btn-success">Edit</button>
+                                </div>
+                            </form>
+                        </li>
+                    </ul>
+                    {% endif %}
+                </li>
+                {% endfor %}
+            </ul>
+        </div>
     </div>
 </div>
 

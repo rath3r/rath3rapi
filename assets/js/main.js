@@ -20,6 +20,19 @@ APP.rath3rApi = (function () {
             }
         });
 
+        $('#site-container').mixItUp({
+            load: {
+                sort: 'title:asc'
+            }
+        });
+
+        var mixHeight = 0;
+        $('.mix').each(function(){
+            if($(this).height() > mixHeight) {
+                mixHeight = $(this).height();
+            }
+        });
+        $('.mix').height(mixHeight - 10);
     }
 
     return {

@@ -1,6 +1,6 @@
 <?php
 
-class Skills_Controller {
+class Skills_Controller extends Controller {
 
     function __construct() {
 
@@ -14,8 +14,13 @@ class Skills_Controller {
         $success = false;
         $body = $request->getParsedBody();
 
-        $body['dateStarted'] = DateTime::createFromFormat('d/m/Y', $body['dateStarted'])->format('Y-m-d');
-        $body['dateFinished'] = DateTime::createFromFormat('d/m/Y', $body['dateFinished'])->format('Y-m-d');
+
+        $body['dateStarted'] = $this->formatDate($body['dateStarted']);
+        $body['dateFinished'] = $this->formatDate($body['dateFinished']);
+
+        if (!isset($body['stillUsing'])) {
+            $body['stillUsing'] = false;
+        }
 
         $skill = new Skills();
 
@@ -28,6 +33,7 @@ class Skills_Controller {
                 $skill->title = $body['title'];
                 $skill->dateStarted = $body['dateStarted'];
                 $skill->dateFinished = $body['dateFinished'];
+                $skill->stillUsing = $body['stillUsing'];
 
                 $skill->save();
                 $success = true;
@@ -42,7 +48,8 @@ class Skills_Controller {
 
             $skill->title = $body['title'];
             $skill->dateStarted = $body['dateStarted'];
-            $skill->dateStarted = $body['dateFinished'];
+            $skill->dateFinished = $body['dateFinished'];
+            $skill->stillUsing = $body['stillUsing'];
 
             $skill->save();
             $success = true;
@@ -90,4 +97,44 @@ class Skills_Controller {
 
     }
 
+    function getSkill($request, $response, $args) {
+
+        $body = $request->getQueryParams();
+
+        $skills = new Skills();
+
+        $skills = $skills::where('ID', '=', $body['id'])->get();
+
+        $skillsArr = $skills->toArray();
+
+        return $skillsArr[0];
+    }
+
+    function edit($request, $response, $args) {
+
+        $body = $request->getParsedBody();
+
+        $skills = new Skills();
+
+        $skill = $skills::where('ID', '=', $body['id'])->get();
+
+        $currSkill = $skill[0];
+
+        $currSkill->title = $body['title'];
+
+        if(isset($body['stillUsing'])){
+            $currSkill->stillUsing = 1;
+            $body['dateFinished'] = false;
+
+        }else{
+            $currSkill->stillUsing = 0;
+        }
+
+        $currSkill->dateStarted = $this->formatDate($body['dateStarted']);
+        $currSkill->dateFinished = $this->formatDate($body['dateFinished']);
+
+
+        $currSkill->save();
+
+    }
 }

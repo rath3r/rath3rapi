@@ -76,6 +76,7 @@ class database
             $table->increments('id');
             $table->timestamps();
             $table->string('title')->unique();
+            $table->string('url');
             $table->date('dateStarted');
             $table->date('dateFinished');
             $table->boolean('stillUsing');

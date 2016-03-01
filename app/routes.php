@@ -23,6 +23,8 @@ class Routes {
 
         $app = $this->sites($app);
 
+        $app = $this->about($app);
+
         $app = $this->images($app);
 
         $app = $this->json($app);
@@ -79,6 +81,29 @@ class Routes {
             // maybe I need to use flash messages
             //http://help.slimframework.com/discussions/problems/12059-how-to-display-flash-message-in-twig-view
             // https://github.com/slimphp/Slim-Flash
+
+            return $response->withStatus(302)->withHeader('Location', '/skills');
+
+        });
+
+        $app->get('/skills/edit', function ($request, $response, $args) {
+
+            $skills = new Skills_Controller();
+            $skill = $skills->getSkill($request, $response, $args);
+
+            $return = [
+                'auth' => $this->auth,
+                'user' => $this->user,
+                'skill' => $skill
+            ];
+
+            return $this->view->render($response, '/forms/editSkills.html', $return);
+        });
+
+        $app->post('/skills/edit', function ($request, $response, $args) {
+
+            $skills = new Skills_Controller();
+            $site = $skills->edit($request, $response, $args);
 
             return $response->withStatus(302)->withHeader('Location', '/skills');
 
@@ -310,6 +335,21 @@ class Routes {
             //return $response->withStatus(307)->withHeader("Location", "/");
 
         })->setName('login');
+
+        return $app;
+    }
+
+    function about($app) {
+
+        $app->get('/about', function ($request, $response, $args) {
+
+            $return = [
+                'auth' => $this->auth,
+                'user' => $this->user
+            ];
+
+            return $this->view->render($response, 'about.html', $return);
+        });
 
         return $app;
     }

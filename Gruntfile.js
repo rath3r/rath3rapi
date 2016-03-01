@@ -57,6 +57,8 @@ module.exports = function(grunt) {
                 src: [
                     '<%= settings.bower %>/jquery/dist/jquery.js',
                     '<%= settings.bower %>/jquery-ui/jquery-ui.js',
+                    '<%= settings.bower %>/bootstrap/dist/js/bootstrap.js',
+                    '<%= settings.assets %>/vendor/mixitup/src/jquery.mixitup.js',
                 ],
                 dest: '<%= settings.dist %>/scripts/libs.js',
             },
@@ -65,6 +67,17 @@ module.exports = function(grunt) {
                     '<%= settings.assets %>/js/main.js',
                 ],
                 dest: '<%= settings.dist %>/scripts/main.js',
+            },
+        },
+        imagemin: {
+            svg: {
+                options: {
+                    optimizationLevel: 3,
+                    svgoPlugins: [{ removeViewBox: false }],
+                },
+                files: {                         // Dictionary of files
+                    '<%= settings.dist %>/images/icons/offline.svg': '<%= settings.assets %>/images/icons/offline.svg',
+                }
             },
         },
         watch: {
@@ -84,12 +97,14 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks('grunt-contrib-less');
     grunt.loadNpmTasks('grunt-contrib-copy');
     grunt.loadNpmTasks('grunt-contrib-concat');
+    grunt.loadNpmTasks('grunt-contrib-imagemin');
 
     grunt.registerTask('default', [
         'clean',
         'less',
         'copy',
-        'concat'
+        'concat',
+        'imagemin'
     ]);
 
 

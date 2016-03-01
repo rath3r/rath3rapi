@@ -1,17 +1,11 @@
 <?php
 
-class Sites_Controller {
+class Sites_Controller extends Controller {
 
     function __construct() {
 
         //echo "skills";
 
-    }
-
-    function formatDate($date) {
-        var_dump($date);
-        var_dump(DateTime::createFromFormat('d/m/Y', $date));
-        return DateTime::createFromFormat('d/m/Y', $date)->format('Y-m-d');
     }
 
     function add($request, $response, $args) {
@@ -58,6 +52,7 @@ class Sites_Controller {
         if($add) {
 
             $site->title = $body['title'];
+            $site->url = $body['url'];
             $site->dateStarted = $body['dateStarted'];
             $site->dateFinished = $body['dateFinished'];
 
@@ -117,12 +112,13 @@ class Sites_Controller {
         $currSite = $sites[0];
 
         $currSite->title = $body['title'];
+        $currSite->url = $body['url'];
         $currSite->dateStarted = $this->formatDate($body['dateStarted']);
         $currSite->dateFinished = $this->formatDate($body['dateFinished']);
+
         if(isset($body['stillUsing'])){
             $currSite->stillUsing = 1;
         }else{
-            $currSite->stillUsing = 0;
             $currSite->stillUsing = 0;
         }
         $currSite->save();
