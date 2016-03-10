@@ -101,12 +101,20 @@ class Skills_Controller extends Controller {
 
         $ind = 0;
 
+
+
         foreach($allskills as $skill){
 
-            $skillArr[$ind]['images'] = $skill->image ?: [];
+
+            //$skillArr[$ind]['image'] = $skill->image ?: [];
+
+            $skillArr[$ind]['image'] = "/img/skills/" . strtolower($skillArr[$ind]['title']) . ".svg";
 
             $ind ++;
         }
+//
+//        var_dump($skillArr);
+//        die;
 
         return $skillArr;
 

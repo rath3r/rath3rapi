@@ -76,10 +76,18 @@ module.exports = function(grunt) {
                     svgoPlugins: [{ removeViewBox: false }],
                 },
                 files: {
-                    '<%= settings.dist %>/images/icons/offline.svg': '<%= settings.assets %>/images/icons/offline.svg',
-                    '<%= settings.dist %>/images/icons/no-image.svg': '<%= settings.assets %>/images/icons/no-image.svg',
+                    '<%= settings.dist %>/img/icons/offline.svg': '<%= settings.assets %>/img/icons/offline.svg',
+                    '<%= settings.dist %>/img/icons/no-image.svg': '<%= settings.assets %>/img/icons/no-image.svg',
                 }
             },
+            dynamic: {
+                files: [{
+                    expand: true,
+                    cwd: '<%= settings.assets %>/img/',                   // Src matches are relative to this path
+                    src: ['**/*.{png,jpg,gif}'],   // Actual patterns to match
+                    dest: '<%= settings.dist %>/img/'                  // Destination path prefix
+                }]
+            }
         },
         watch: {
             less: {
