@@ -75,8 +75,9 @@ module.exports = function(grunt) {
                     optimizationLevel: 3,
                     svgoPlugins: [{ removeViewBox: false }],
                 },
-                files: {                         // Dictionary of files
+                files: {
                     '<%= settings.dist %>/images/icons/offline.svg': '<%= settings.assets %>/images/icons/offline.svg',
+                    '<%= settings.dist %>/images/icons/no-image.svg': '<%= settings.assets %>/images/icons/no-image.svg',
                 }
             },
         },

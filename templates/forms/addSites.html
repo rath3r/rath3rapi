@@ -57,19 +57,19 @@
                     <label for="images">Images</label>
                     <div class="row" id="images">
                         {% if images %}
-                        {% for image in images %}
-                        <div class="col-sm-6 col-md-2 image">
-                            <img src="{{ image.url }}" />
-                            <div class="checkbox">
-                                <label for="skill-{{ skill.id }}">
-                                    <input type="checkbox" id="image-{{ image.id }}" name="images[]" value="{{ image.id }}">{{ image.title }}
-                                </label>
+                            {% for image in images %}
+                            <div class="col-sm-6 col-md-2 image">
+                                <img src="{{ image.url }}" />
+                                <div class="checkbox">
+                                    <label for="images">
+                                        <input type="checkbox" id="image-{{ image.id }}" name="images[]" value="{{ image.id }}">{{ image.title }}
+                                    </label>
+                                </div>
                             </div>
-                        </div>
-                        {% if loop.index is divisible by(6) %}
-                    </div>
-                    <div class="row">
-                        {% endif %}
+                            {% if loop.index is divisible by(6) %}
+                            </div>
+                            <div class="row">
+                            {% endif %}
                         {% endfor %}
                         {% else %}
                         <div class="col-md-12">

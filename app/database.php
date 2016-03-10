@@ -103,6 +103,7 @@ class database
             $table->timestamps();
             $table->string('title');
             $table->string('url');
+            $table->integer('skills_id')->unsigned();
 
         });
 

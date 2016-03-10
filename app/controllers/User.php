@@ -24,7 +24,6 @@ class User_Controller {
             $user->username = $body['username'];
 
             $result = $user->where('username', '=', $body['username'])->first();
-            var_dump($result);
             if($result){
                 $error['duplicate'] = true;
             }

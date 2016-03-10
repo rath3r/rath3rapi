@@ -14,4 +14,14 @@ class Skills extends Model
     {
         return $this->belongsToMany('Sites');
     }
+
+    /**
+     * Skills have an associated image.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasOne
+     */
+    public function images()
+    {
+        return $this->hasOne('Images');
+    }
 }

@@ -62,11 +62,13 @@ class Routes {
         $app->get('/skills', function ($request, $response, $args) {
 
             $skills = new Skills_Controller();
+            $images = new Images_Controller();
 
             $return = [
                 'auth' => $this->auth,
                 'user' => $this->user,
-                'skills' => $skills->getAll()
+                'skills' => $skills->getAll(),
+                'images' => $images->getAll()
             ];
 
             return $this->view->render($response, 'skills.html', $return);

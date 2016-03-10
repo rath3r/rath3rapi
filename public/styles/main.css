@@ -8008,3 +8008,8 @@ body .ui-tooltip {
 #site-container .mix {
   display: none;
 }
+#images {
+  max-height: 380px;
+  overflow-y: scroll;
+  overflow-x: hidden;
+}

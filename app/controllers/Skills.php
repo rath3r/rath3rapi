@@ -17,6 +17,9 @@ class Skills_Controller extends Controller {
 
         $body['dateStarted'] = $this->formatDate($body['dateStarted']);
         $body['dateFinished'] = $this->formatDate($body['dateFinished']);
+        var_dump($body);
+
+        die;
 
         if (!isset($body['stillUsing'])) {
             $body['stillUsing'] = false;
@@ -90,10 +93,22 @@ class Skills_Controller extends Controller {
 
     public function getAll() {
 
-        $skill = new Skills();
+        $skills = new Skills();
         //echo "asdf";
+        $allskills = $skills::all();
 
-        return $skill::all()->toArray();
+        $skillArr = $skills::all()->toArray();
+
+        $ind = 0;
+
+        foreach($allskills as $skill){
+
+            $skillArr[$ind]['images'] = $skill->image ?: [];
+
+            $ind ++;
+        }
+
+        return $skillArr;
 
     }
 

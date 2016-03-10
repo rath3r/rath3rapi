@@ -27,45 +27,61 @@
 
     <div class="row">
         <div class="col-md-12">
-            <ul class="skills">
-                {% for skill in skills %}
-                <li>
-                    <div>
-                        <label>Title:</label>
-                        <p class="inline">{{ skill.title }}</p>
-                        <label>First used:</label>
-                        <p class="inline">{{ skill.dateStarted|date("m/d/Y") }}</p>
-                        {% if skill.stillUsing %}
-                        <label>Still Using:</label>
-                        <p class="inline">{{ skill.stillUsing }}</p>
-                        {% else %}
-                        <label>Used until:</label>
-                        <p class="inline">{{ skill.dateFinished|date("m/d/Y") }}</p>
-                        {% endif %}
+            {% for skill in skills %}
+                <div class="col-md-4 mix">
+                    <div class="row">
+                        <div class="col-xs-10 text-center">
+                            <h2 class="inline">{{ skill.title }}</h2>
+                        </div>
+                        <div class="col-xs-2 text-right">
+                            {% if skill.image %}
+                            <img src="{{ skill.image }}" alt="{{ skill.title }}" >
+                            {% else %}
+                            <img src="/images/icons/no-image.svg" alt="no-image" width="50px"/>
+                            {% endif %}
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-6">
+                            <label>First used:</label>
+                            <p>{{ skill.dateStarted|date("m/d/Y") }}</p>
+                        </div>
+                        <div class="col-xs-6">
+                            {% if skill.stillUsing %}
+                            <label>Still Using:</label>
+                            <p>{{ skill.stillUsing }}</p>
+                            {% else %}
+                            <label>Used until:</label>
+                            <p>{{ skill.dateFinished|date("m/d/Y") }}</p>
+                            {% endif %}
+                        </div>
                     </div>
                     {% if auth %}
-                    <ul class="list-inline">
-                        <li>
-                            <form class="form-inline" action="/skills/delete" method="post">
-                                <div class="actions">
-                                    <input type="hidden" name="id" value="{{ skill.id }}">
-                                    <button type="submit" name="delete" class="btn btn-danger">Delete</button>
-                                </div>
-                            </form>
-                        </li>
-                        <li>
-                            <form class="form-inline" action="/skills/edit" method="get">
-                                <div class="actions">
-                                    <input type="hidden" name="id" value="{{ skill.id }}">
-                                    <button type="submit" class="btn btn-success">Edit</button>
-                                </div>
-                            </form>
-                        </li>
-                    </ul>
+                    <div class="row">
+                        <div class="col-xs-12">
+                            <ul class="list-inline">
+                                <li>
+                                    <form class="form-inline" action="/skills/delete" method="post">
+                                        <div class="actions">
+                                            <input type="hidden" name="id" value="{{ skill.id }}">
+                                            <button type="submit" name="delete" class="btn btn-danger">Delete</button>
+                                        </div>
+                                    </form>
+                                </li>
+                                <li>
+                                    <form class="form-inline" action="/skills/edit" method="get">
+                                        <div class="actions">
+                                            <input type="hidden" name="id" value="{{ skill.id }}">
+                                            <button type="submit" class="btn btn-success">Edit</button>
+                                        </div>
+                                    </form>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
                     {% endif %}
-                </li>
-                {% endfor %}
-            </ul>
+                </div>
+            {% endfor %}
         </div>
     </div>
 </div>
