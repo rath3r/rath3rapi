@@ -57,9 +57,13 @@ class site {
         $container = $app->getContainer();
 
         $container['view'] = function ($c) {
+
+            // templates location and a settings array
             $view = new \Slim\Views\Twig(
                 '../templates', [
                     'cache' => '../cache',
+                    'auto_reload' => true,
+                    'debug' => true
                 ]
             );
 

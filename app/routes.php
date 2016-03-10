@@ -353,6 +353,16 @@ class Routes {
             return $this->view->render($response, 'about.html', $return);
         });
 
+        $app->get('/ideas', function ($request, $response, $args) {
+
+            $return = [
+                'auth' => $this->auth,
+                'user' => $this->user
+            ];
+
+            return $this->view->render($response, 'ideas.html', $return);
+        });
+
         return $app;
     }
 

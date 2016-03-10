@@ -9,6 +9,9 @@
                     <li><a href="/sites">Sites</a></li>
                     <li><a href="/images">Images</a></li>
                     <li><a href="/about">About</a></li>
+                    {% if auth %}
+                    <li><a href="/ideas">Ideas</a></li>
+                    {% endif %}
                 </ul>
                 {% if auth %}
                 <p class="navbar-text navbar-right">Welcome {{ user }}.  <a href="/logout">logout</a></p>
