@@ -17,9 +17,9 @@ class Skills_Controller extends Controller {
 
         $body['dateStarted'] = $this->formatDate($body['dateStarted']);
         $body['dateFinished'] = $this->formatDate($body['dateFinished']);
-        var_dump($body);
-
-        die;
+//        var_dump($body);
+//
+//        die;
 
         if (!isset($body['stillUsing'])) {
             $body['stillUsing'] = false;
@@ -153,11 +153,15 @@ class Skills_Controller extends Controller {
             $currSkill->stillUsing = 0;
         }
 
+        var_dump($currSkill);
+
         $currSkill->dateStarted = $this->formatDate($body['dateStarted']);
         $currSkill->dateFinished = $this->formatDate($body['dateFinished']);
 
+        var_dump($currSkill);
 
-        $currSkill->save();
 
+        var_dump($currSkill->save());
+        //die;
     }
 }
