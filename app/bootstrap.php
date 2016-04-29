@@ -38,8 +38,11 @@ class site {
 
         $this->flashDB(false);
 
+        $config = parse_ini_file('../.config');
+
         $app->auth = false;
         $app->user = '';
+        $app->register = $config['registerActive'];
 
         $app->add(function ($request, $response, $next) use (&$app){
 

@@ -29,7 +29,9 @@
                         <div style="margin-top:10px" class="form-group">
                             <div class="col-sm-12 controls">
                                 <button type="submit" id="btn-login" href="#" class="btn btn-success">Login</button>
-                                <a href="/register">Register</a>
+                                {% if register %}
+                                    <a href="/register">Register</a>
+                                {% endif %}
                             </div>
                         </div>
                     </div>

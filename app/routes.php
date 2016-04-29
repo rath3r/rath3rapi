@@ -8,14 +8,15 @@
  */
 class Routes {
 
+    public $config;
+
     function __construct() {
         //$this->run($app);
     }
 
     function run($app) {
 
-//        var_dump(site::getApp());
-//        die;
+        $this->config = parse_ini_file('../.config');
 
         $app = $this->root($app);
 
@@ -33,25 +34,19 @@ class Routes {
 
         $app = $this->login($app);
 
-//        $app->get('/tables', function ($request, $response, $args) {
-//
-//            $tables = new Skills_Migrations();
-//            $tables->up();
-//
-//            return "";
-//        });
-
-
         return $app;
     }
 
     function root($app) {
 
         $app->get('/', function ($request, $response, $args) {
+
             return $this->view->render($response, 'index.html', [
-                'auth' => $this->auth,
-                'user' => $this->user
+                'auth'      => $this->auth,
+                'user'      => $this->user,
+                'register'  => $this->register
             ]);
+
         })->setName('');
 
         return $app;
@@ -271,45 +266,49 @@ class Routes {
 
     function register($app) {
 
-        $app->get('/register', function ($request, $response, $args) {
+        if($this->config['registerActive']) {
 
-            if($this->auth){
+            $app->get('/register', function ($request, $response, $args) {
 
-                return $response->withStatus(200)->withHeader("Location", "/");
+                if($this->auth){
 
-            } else {
-                return $this->view->render($response, 'register.html', [
-                    'auth' => $this->auth,
-                    'user' => $this->user,
-                    'regOpen' => true
-                ]);
-            }
+                    return $response->withStatus(200)->withHeader("Location", "/");
 
-        })->setName('register');
+                } else {
+                    return $this->view->render($response, 'register.html', [
+                        'auth' => $this->auth,
+                        'user' => $this->user,
+                        'regOpen' => true
+                    ]);
+                }
 
-        $app->post('/register', function ($request, $response, $args) {
+            })->setName('register');
 
-            //var_dump($this->auth);
-            if($this->auth){
+            $app->post('/register', function ($request, $response, $args) {
 
-                return $response->withStatus(200)->withHeader("Location", "/");
+                //var_dump($this->auth);
+                if($this->auth){
 
-            } else {
-                $user = new User_Controller();
-                $ret = $user->register($request, $response, $args);
+                    return $response->withStatus(200)->withHeader("Location", "/");
 
-                //var_dump($ret);
+                } else {
+                    $user = new User_Controller();
+                    $ret = $user->register($request, $response, $args);
 
-                return $this->view->render($response, 'register.html', [
-                    'auth' => $this->auth,
-                    'user' => $this->user,
-                    'regOpen' => true,
-                    'error' => $ret['error'],
-                    'success' => $ret['success']
-                ]);
-            }
+                    //var_dump($ret);
 
-        })->setName('register');
+                    return $this->view->render($response, 'register.html', [
+                        'auth' => $this->auth,
+                        'user' => $this->user,
+                        'regOpen' => true,
+                        'error' => $ret['error'],
+                        'success' => $ret['success']
+                    ]);
+                }
+
+            })->setName('register');
+
+        }
 
         return $app;
     }

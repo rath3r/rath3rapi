@@ -15,28 +15,16 @@ class database
 
         $config = parse_ini_file('../.config');
 
-        $host = $config['host']; //HOST NAME.
+        $db_host = $config['host']; //Host Name.
         $db_name = $config['dbname']; //Database Name
         $db_username = $config['username']; //Database Username
         $db_password = $config['password']; //Database Password
-
-//        try {
-//            $pdo = new PDO('mysql:host=' . $host . ';dbname=' . $db_name, $db_username, $db_password);
-//
-//        } catch (PDOException $e) {
-//            exit('Error Connecting To DataBase');
-//        }
-//
-//        $this->pdo = $pdo;
-
-        // Bootstrap Eloquent ORM
-        //$connFactory = new \Illuminate\Database\Connectors\ConnectionFactory();
 
         $this->capsule = new Capsule;
 
         $this->capsule->addConnection([
             'driver'    => 'mysql',
-            'host'      => $host,
+            'host'      => $db_host,
             'database'  => $db_name,
             'username'  => $db_username,
             'password'  => $db_password,
