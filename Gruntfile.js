@@ -113,7 +113,7 @@ module.exports = function(grunt) {
         'less',
         'copy',
         'concat',
-        'imagemin'
+        //'imagemin'
     ]);
 
 

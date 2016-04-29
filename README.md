@@ -1,7 +1,8 @@
 
 # Rath3r API
 
-A simple application focused on the presentation of a portfolio site.
+This site is now active on [data.rath3r.com](http://data.rath3r.com) it is a simple application focused on the 
+presentation of data for a portfolio site.
 
 The authentication is based on a Authentication tutorial using Slim 2 - [PHP Authentication][1].
 

@@ -108,7 +108,7 @@ class Skills_Controller extends Controller {
 
             //$skillArr[$ind]['image'] = $skill->image ?: [];
 
-            $skillArr[$ind]['image'] = "/img/skills/" . strtolower($skillArr[$ind]['title']) . ".svg";
+            $skillArr[$ind]['image'] = "img/skills/" . strtolower($skillArr[$ind]['title']) . ".png";
 
             $ind ++;
         }
