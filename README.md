@@ -59,6 +59,14 @@ $view = new \Slim\Views\Twig(
 );
 ```
 
+## Image resize
+
+The uploaded images are too big to be used effectively on other sites. Hopefully
+a some plugins can help with image resizing:
+
+* [Intervention/image](https://github.com/Intervention/image)
+
+
 ## Usage
 
 After adding new file run:
