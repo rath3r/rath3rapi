@@ -1,5 +1,8 @@
 <?php
 
+// import the Intervention Image Manager Class
+use Intervention\Image\ImageManager;
+
 class Images_Controller {
 
     function __construct() {
@@ -53,6 +56,22 @@ class Images_Controller {
         $allImages = $images::all();
 
         $imageArr = $allImages->toArray();
+
+        // create an image manager instance with favored driver
+        $manager = new ImageManager(array('driver' => 'imagick'));
+
+        // need to investigate the save path
+        // foreach($imageArr as $image){
+        //     //var_dump($image);
+        //     // to finally create image instances
+        //     $img = $manager->make($image['url'])->resize(300, 200);
+        //
+        //     //var_dump($image);
+        //     //echo $image->response();
+        //     $img->save('public/uploads/resize/'.$image['title'].'.png', 60);
+        // }
+        //
+        // die;
 
         return $imageArr;
 

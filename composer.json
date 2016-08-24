@@ -10,7 +10,9 @@
     "require": {
         "slim/slim": "^3.0@RC",
         "slim/twig-view": "^2.0",
-        "illuminate/database": "*"
+        "illuminate/database": "*",
+        "intervention/image": "^2.3",
+        "intervention/imagecache": "^2.3"
     },
     "autoload": {
         "classmap": [
