@@ -62,9 +62,9 @@ $view = new \Slim\Views\Twig(
 ## Image resize
 
 The uploaded images are too big to be used effectively on other sites. Hopefully
-a some plugins can help with image resizing:
+this plugin can help, [Intervention/image][5] with image resizing:
 
-* [Intervention/image](https://github.com/Intervention/image)
+*
 
 
 ## Usage
@@ -89,3 +89,4 @@ INSERT INTO `users` (`id`, `username`, `email`, `first_name`, `last_name`, `pass
 [2]: https://github.com/illuminate/database
 [3]: http://twig.sensiolabs.org/
 [4]: http://blog.bobbyallen.me/2013/03/23/using-composer-in-your-own-php-projects-with-your-own-git-packageslibraries/
+[5]: https://github.com/Intervention/image

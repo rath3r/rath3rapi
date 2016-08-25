@@ -58,20 +58,23 @@ class Images_Controller {
         $imageArr = $allImages->toArray();
 
         // create an image manager instance with favored driver
-        $manager = new ImageManager(array('driver' => 'imagick'));
-
-        // need to investigate the save path
+        // $manager = new ImageManager(array('driver' => 'imagick'));
+        //
+        // // need to investigate the save path
         // foreach($imageArr as $image){
         //     //var_dump($image);
         //     // to finally create image instances
         //     $img = $manager->make($image['url'])->resize(300, 200);
         //
-        //     //var_dump($image);
+        //     // var_dump($img->path);
+        //     //  die;
         //     //echo $image->response();
+        //     // $img->save('public/uploads/resize/'.$image['title'].'.png', 60);
         //     $img->save('public/uploads/resize/'.$image['title'].'.png', 60);
+        //     break;
         // }
-        //
         // die;
+
 
         return $imageArr;
 
