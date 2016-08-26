@@ -253,10 +253,18 @@ class Routes {
 
     function json($app) {
 
-        $app->get('/json', function ($request, $response, $args) {
+        $app->get('/json/skills', function ($request, $response, $args) {
 
             $json = new JSON_Controller($request, $response, $args);
             $json->skills();
+
+            return $json->response;
+        });
+
+        $app->get('/json/sites', function ($request, $response, $args) {
+
+            $json = new JSON_Controller($request, $response, $args);
+            $json->sites();
 
             return $json->response;
         });

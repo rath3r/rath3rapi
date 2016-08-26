@@ -67,4 +67,14 @@ class JSON_Controller {
         $body->write(json_encode($skills::all()->toArray()));
 
     }
+
+    public function sites() {
+
+        $body = $this->response->getBody();
+
+        $sites = new Sites_Controller();
+
+        $body->write(json_encode($sites->getAll()));
+
+    }
 }

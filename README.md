@@ -62,10 +62,8 @@ $view = new \Slim\Views\Twig(
 ## Image resize
 
 The uploaded images are too big to be used effectively on other sites. Hopefully
-this plugin can help, [Intervention/image][5] with image resizing:
-
-*
-
+this plugin can help, [Intervention/image][5] with image resizing. The uploads
+folder needs to be writeable by the server for resizing to work.
 
 ## Usage
 
