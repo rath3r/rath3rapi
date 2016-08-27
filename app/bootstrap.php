@@ -29,16 +29,29 @@ class site {
 
     function run() {
 
+        $config = parse_ini_file('../.config');
+
         $this->setUpDb();
 
+        $showErrors = isset($config['showErrors']) ? $config['showErrors'] : false;
+
+        $configuration = [
+            'settings' => [
+                'displayErrorDetails' => $showErrors,
+            ],
+        ];
+
+        $c = new \Slim\Container($configuration);
+
         // create new Slim instance
-        $app = new \Slim\App();
+        $app = new \Slim\App($c);
+
+        // create new Slim instance
+        //$app = new \Slim\App();
 
         $app->db = $this->database;
 
         $this->flashDB(false);
-
-        $config = parse_ini_file('../.config');
 
         $app->auth = false;
         $app->user = '';

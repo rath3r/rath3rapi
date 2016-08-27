@@ -7,12 +7,14 @@
 
 {% block content %}
 <div class="container">
-    <div class="row">
-        <div class="col-md-12">
-            <p class="important">
-                {% include 'partials/login.html' %}
-            </p>
-        </div>
+  <div class="row">
+    <div class="col-md-7">
+      <p>This is the data source for <a href="http://rath3r.com">rath3r.com</a>.</p>
+      <p>There is no pubic registration process if you would like to know more please visit the main site.</p>
     </div>
+    <div class="col-md-5">
+      {% include 'partials/login.html' %}
+    </div>
+  </div>
 </div>
 {% endblock %}

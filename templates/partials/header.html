@@ -5,13 +5,13 @@
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 <a href="/" class="navbar-brand">Data</a>
                 <ul class="nav navbar-nav">
+                  {% if auth %}
                     <li><a href="/skills">Skills</a></li>
                     <li><a href="/sites">Sites</a></li>
                     <li><a href="/images">Images</a></li>
                     <li><a href="/about">About</a></li>
-                    {% if auth %}
                     <li><a href="/ideas">Ideas</a></li>
-                    {% endif %}
+                  {% endif %}
                 </ul>
                 {% if auth %}
                 <p class="navbar-text navbar-right">Welcome {{ user }}.  <a href="/logout">logout</a></p>
